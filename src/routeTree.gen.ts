@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReservarRouteImport } from './routes/reservar'
 import { Route as ApiPublicCronExpirePendingRouteImport } from './routes/api/public/cron/expire-pending'
 import { Route as ApiPublicCronRemindersRouteImport } from './routes/api/public/cron/reminders'
 import { Route as ApiPublicWebhooksMercadopagoRouteImport } from './routes/api/public/webhooks/mercadopago'
@@ -17,6 +18,11 @@ import { Route as ApiPublicWebhooksMercadopagoRouteImport } from './routes/api/p
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReservarRoute = ReservarRouteImport.update({
+  id: '/reservar',
+  path: '/reservar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicCronExpirePendingRoute =
@@ -39,12 +45,14 @@ const ApiPublicWebhooksMercadopagoRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/reservar': typeof ReservarRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/reservar': typeof ReservarRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
@@ -52,6 +60,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/reservar': typeof ReservarRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
@@ -60,18 +69,21 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/reservar'
     | '/api/public/cron/expire-pending'
     | '/api/public/cron/reminders'
     | '/api/public/webhooks/mercadopago'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/reservar'
     | '/api/public/cron/expire-pending'
     | '/api/public/cron/reminders'
     | '/api/public/webhooks/mercadopago'
   id:
     | '__root__'
     | '/'
+    | '/reservar'
     | '/api/public/cron/expire-pending'
     | '/api/public/cron/reminders'
     | '/api/public/webhooks/mercadopago'
@@ -79,6 +91,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ReservarRoute: typeof ReservarRoute
   ApiPublicCronExpirePendingRoute: typeof ApiPublicCronExpirePendingRoute
   ApiPublicCronRemindersRoute: typeof ApiPublicCronRemindersRoute
   ApiPublicWebhooksMercadopagoRoute: typeof ApiPublicWebhooksMercadopagoRoute
@@ -91,6 +104,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reservar': {
+      id: '/reservar'
+      path: '/reservar'
+      fullPath: '/reservar'
+      preLoaderRoute: typeof ReservarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/cron/expire-pending': {
@@ -119,6 +139,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ReservarRoute: ReservarRoute,
   ApiPublicCronExpirePendingRoute: ApiPublicCronExpirePendingRoute,
   ApiPublicCronRemindersRoute: ApiPublicCronRemindersRoute,
   ApiPublicWebhooksMercadopagoRoute: ApiPublicWebhooksMercadopagoRoute,
