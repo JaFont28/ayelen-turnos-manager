@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReservarRouteImport } from './routes/reservar'
+import { Route as TurnoTokenRouteImport } from './routes/turno.$token'
 import { Route as ApiPublicCronExpirePendingRouteImport } from './routes/api/public/cron/expire-pending'
 import { Route as ApiPublicCronRemindersRouteImport } from './routes/api/public/cron/reminders'
 import { Route as ApiPublicWebhooksMercadopagoRouteImport } from './routes/api/public/webhooks/mercadopago'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const ReservarRoute = ReservarRouteImport.update({
   id: '/reservar',
   path: '/reservar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TurnoTokenRoute = TurnoTokenRouteImport.update({
+  id: '/turno/$token',
+  path: '/turno/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicCronExpirePendingRoute =
@@ -46,6 +52,7 @@ const ApiPublicWebhooksMercadopagoRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/reservar': typeof ReservarRoute
+  '/turno/$token': typeof TurnoTokenRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
@@ -53,6 +60,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/reservar': typeof ReservarRoute
+  '/turno/$token': typeof TurnoTokenRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
@@ -61,6 +69,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/reservar': typeof ReservarRoute
+  '/turno/$token': typeof TurnoTokenRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
@@ -70,6 +79,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/reservar'
+    | '/turno/$token'
     | '/api/public/cron/expire-pending'
     | '/api/public/cron/reminders'
     | '/api/public/webhooks/mercadopago'
@@ -77,6 +87,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/reservar'
+    | '/turno/$token'
     | '/api/public/cron/expire-pending'
     | '/api/public/cron/reminders'
     | '/api/public/webhooks/mercadopago'
@@ -84,6 +95,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/reservar'
+    | '/turno/$token'
     | '/api/public/cron/expire-pending'
     | '/api/public/cron/reminders'
     | '/api/public/webhooks/mercadopago'
@@ -92,6 +104,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ReservarRoute: typeof ReservarRoute
+  TurnoTokenRoute: typeof TurnoTokenRoute
   ApiPublicCronExpirePendingRoute: typeof ApiPublicCronExpirePendingRoute
   ApiPublicCronRemindersRoute: typeof ApiPublicCronRemindersRoute
   ApiPublicWebhooksMercadopagoRoute: typeof ApiPublicWebhooksMercadopagoRoute
@@ -111,6 +124,13 @@ declare module '@tanstack/react-router' {
       path: '/reservar'
       fullPath: '/reservar'
       preLoaderRoute: typeof ReservarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/turno/$token': {
+      id: '/turno/$token'
+      path: '/turno/$token'
+      fullPath: '/turno/$token'
+      preLoaderRoute: typeof TurnoTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/cron/expire-pending': {
@@ -140,6 +160,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ReservarRoute: ReservarRoute,
+  TurnoTokenRoute: TurnoTokenRoute,
   ApiPublicCronExpirePendingRoute: ApiPublicCronExpirePendingRoute,
   ApiPublicCronRemindersRoute: ApiPublicCronRemindersRoute,
   ApiPublicWebhooksMercadopagoRoute: ApiPublicWebhooksMercadopagoRoute,
