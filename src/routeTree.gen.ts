@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as ReservarRouteImport } from './routes/reservar'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as TurnoTokenRouteImport } from './routes/turno.$token'
 import { Route as ApiPublicCronExpirePendingRouteImport } from './routes/api/public/cron/expire-pending'
 import { Route as ApiPublicCronRemindersRouteImport } from './routes/api/public/cron/reminders'
@@ -31,6 +32,11 @@ const ReservarRoute = ReservarRouteImport.update({
   id: '/reservar',
   path: '/reservar',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const TurnoTokenRoute = TurnoTokenRouteImport.update({
   id: '/turno/$token',
@@ -57,8 +63,9 @@ const ApiPublicWebhooksMercadopagoRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/reservar': typeof ReservarRoute
+  '/admin/login': typeof AdminLoginRoute
   '/turno/$token': typeof TurnoTokenRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
@@ -66,8 +73,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/reservar': typeof ReservarRoute
+  '/admin/login': typeof AdminLoginRoute
   '/turno/$token': typeof TurnoTokenRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
@@ -76,8 +84,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/reservar': typeof ReservarRoute
+  '/admin/login': typeof AdminLoginRoute
   '/turno/$token': typeof TurnoTokenRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/reservar'
+    | '/admin/login'
     | '/turno/$token'
     | '/api/public/cron/expire-pending'
     | '/api/public/cron/reminders'
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/reservar'
+    | '/admin/login'
     | '/turno/$token'
     | '/api/public/cron/expire-pending'
     | '/api/public/cron/reminders'
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/reservar'
+    | '/admin/login'
     | '/turno/$token'
     | '/api/public/cron/expire-pending'
     | '/api/public/cron/reminders'
@@ -115,7 +127,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRouteRoute: typeof AdminRouteRoute
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   ReservarRoute: typeof ReservarRoute
   TurnoTokenRoute: typeof TurnoTokenRoute
   ApiPublicCronExpirePendingRoute: typeof ApiPublicCronExpirePendingRoute
@@ -145,6 +157,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/reservar'
       preLoaderRoute: typeof ReservarRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/turno/$token': {
       id: '/turno/$token'
@@ -177,9 +196,21 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteRouteChildren {
+  AdminLoginRoute: typeof AdminLoginRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminLoginRoute: AdminLoginRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRouteRoute: AdminRouteRoute,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   ReservarRoute: ReservarRoute,
   TurnoTokenRoute: TurnoTokenRoute,
   ApiPublicCronExpirePendingRoute: ApiPublicCronExpirePendingRoute,
