@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as ReservarRouteImport } from './routes/reservar'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminBloqueosRouteImport } from './routes/admin/bloqueos'
 import { Route as AdminCalendarioRouteImport } from './routes/admin/calendario'
 import { Route as AdminDisponibilidadRouteImport } from './routes/admin/disponibilidad'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
@@ -40,6 +41,11 @@ const ReservarRoute = ReservarRouteImport.update({
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminBloqueosRoute = AdminBloqueosRouteImport.update({
+  id: '/bloqueos',
+  path: '/bloqueos',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminCalendarioRoute = AdminCalendarioRouteImport.update({
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/reservar': typeof ReservarRoute
+  '/admin/bloqueos': typeof AdminBloqueosRoute
   '/admin/calendario': typeof AdminCalendarioRoute
   '/admin/disponibilidad': typeof AdminDisponibilidadRoute
   '/admin/login': typeof AdminLoginRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/reservar': typeof ReservarRoute
+  '/admin/bloqueos': typeof AdminBloqueosRoute
   '/admin/calendario': typeof AdminCalendarioRoute
   '/admin/disponibilidad': typeof AdminDisponibilidadRoute
   '/admin/login': typeof AdminLoginRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/reservar': typeof ReservarRoute
+  '/admin/bloqueos': typeof AdminBloqueosRoute
   '/admin/calendario': typeof AdminCalendarioRoute
   '/admin/disponibilidad': typeof AdminDisponibilidadRoute
   '/admin/login': typeof AdminLoginRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/reservar'
+    | '/admin/bloqueos'
     | '/admin/calendario'
     | '/admin/disponibilidad'
     | '/admin/login'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/reservar'
+    | '/admin/bloqueos'
     | '/admin/calendario'
     | '/admin/disponibilidad'
     | '/admin/login'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/reservar'
+    | '/admin/bloqueos'
     | '/admin/calendario'
     | '/admin/disponibilidad'
     | '/admin/login'
@@ -209,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/bloqueos': {
+      id: '/admin/bloqueos'
+      path: '/bloqueos'
+      fullPath: '/admin/bloqueos'
+      preLoaderRoute: typeof AdminBloqueosRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/calendario': {
@@ -271,6 +290,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteRouteChildren {
+  AdminBloqueosRoute: typeof AdminBloqueosRoute
   AdminCalendarioRoute: typeof AdminCalendarioRoute
   AdminDisponibilidadRoute: typeof AdminDisponibilidadRoute
   AdminLoginRoute: typeof AdminLoginRoute
@@ -279,6 +299,7 @@ interface AdminRouteRouteChildren {
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminBloqueosRoute: AdminBloqueosRoute,
   AdminCalendarioRoute: AdminCalendarioRoute,
   AdminDisponibilidadRoute: AdminDisponibilidadRoute,
   AdminLoginRoute: AdminLoginRoute,
