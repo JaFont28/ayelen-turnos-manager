@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicCronExpirePendingRouteImport } from './routes/api/public/cron/expire-pending'
 import { Route as ApiPublicWebhooksMercadopagoRouteImport } from './routes/api/public/webhooks/mercadopago'
 
 const IndexRoute = IndexRouteImport.update({
@@ -17,6 +18,12 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicCronExpirePendingRoute =
+  ApiPublicCronExpirePendingRouteImport.update({
+    id: '/api/public/cron/expire-pending',
+    path: '/api/public/cron/expire-pending',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicWebhooksMercadopagoRoute =
   ApiPublicWebhooksMercadopagoRouteImport.update({
     id: '/api/public/webhooks/mercadopago',
@@ -26,27 +33,37 @@ const ApiPublicWebhooksMercadopagoRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/public/webhooks/mercadopago'
+  fullPaths:
+    '/' | '/api/public/cron/expire-pending' | '/api/public/webhooks/mercadopago'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/public/webhooks/mercadopago'
-  id: '__root__' | '/' | '/api/public/webhooks/mercadopago'
+  to:
+    '/' | '/api/public/cron/expire-pending' | '/api/public/webhooks/mercadopago'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/public/cron/expire-pending'
+    | '/api/public/webhooks/mercadopago'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPublicCronExpirePendingRoute: typeof ApiPublicCronExpirePendingRoute
   ApiPublicWebhooksMercadopagoRoute: typeof ApiPublicWebhooksMercadopagoRoute
 }
 
@@ -57,6 +74,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/cron/expire-pending': {
+      id: '/api/public/cron/expire-pending'
+      path: '/api/public/cron/expire-pending'
+      fullPath: '/api/public/cron/expire-pending'
+      preLoaderRoute: typeof ApiPublicCronExpirePendingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/webhooks/mercadopago': {
@@ -71,6 +95,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPublicCronExpirePendingRoute: ApiPublicCronExpirePendingRoute,
   ApiPublicWebhooksMercadopagoRoute: ApiPublicWebhooksMercadopagoRoute,
 }
 export const routeTree = rootRouteImport
