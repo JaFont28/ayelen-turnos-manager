@@ -15,6 +15,7 @@ import { Route as ReservarRouteImport } from './routes/reservar'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminBloqueosRouteImport } from './routes/admin/bloqueos'
 import { Route as AdminCalendarioRouteImport } from './routes/admin/calendario'
+import { Route as AdminConfiguracionRouteImport } from './routes/admin/configuracion'
 import { Route as AdminDisponibilidadRouteImport } from './routes/admin/disponibilidad'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminPagosRouteImport } from './routes/admin/pagos'
@@ -53,6 +54,11 @@ const AdminBloqueosRoute = AdminBloqueosRouteImport.update({
 const AdminCalendarioRoute = AdminCalendarioRouteImport.update({
   id: '/calendario',
   path: '/calendario',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminConfiguracionRoute = AdminConfiguracionRouteImport.update({
+  id: '/configuracion',
+  path: '/configuracion',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminDisponibilidadRoute = AdminDisponibilidadRouteImport.update({
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/reservar': typeof ReservarRoute
   '/admin/bloqueos': typeof AdminBloqueosRoute
   '/admin/calendario': typeof AdminCalendarioRoute
+  '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/disponibilidad': typeof AdminDisponibilidadRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/pagos': typeof AdminPagosRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/reservar': typeof ReservarRoute
   '/admin/bloqueos': typeof AdminBloqueosRoute
   '/admin/calendario': typeof AdminCalendarioRoute
+  '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/disponibilidad': typeof AdminDisponibilidadRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/pagos': typeof AdminPagosRoute
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/reservar': typeof ReservarRoute
   '/admin/bloqueos': typeof AdminBloqueosRoute
   '/admin/calendario': typeof AdminCalendarioRoute
+  '/admin/configuracion': typeof AdminConfiguracionRoute
   '/admin/disponibilidad': typeof AdminDisponibilidadRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/pagos': typeof AdminPagosRoute
@@ -162,6 +171,7 @@ export interface FileRouteTypes {
     | '/reservar'
     | '/admin/bloqueos'
     | '/admin/calendario'
+    | '/admin/configuracion'
     | '/admin/disponibilidad'
     | '/admin/login'
     | '/admin/pagos'
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
     | '/reservar'
     | '/admin/bloqueos'
     | '/admin/calendario'
+    | '/admin/configuracion'
     | '/admin/disponibilidad'
     | '/admin/login'
     | '/admin/pagos'
@@ -195,6 +206,7 @@ export interface FileRouteTypes {
     | '/reservar'
     | '/admin/bloqueos'
     | '/admin/calendario'
+    | '/admin/configuracion'
     | '/admin/disponibilidad'
     | '/admin/login'
     | '/admin/pagos'
@@ -259,6 +271,13 @@ declare module '@tanstack/react-router' {
       path: '/calendario'
       fullPath: '/admin/calendario'
       preLoaderRoute: typeof AdminCalendarioRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/configuracion': {
+      id: '/admin/configuracion'
+      path: '/configuracion'
+      fullPath: '/admin/configuracion'
+      preLoaderRoute: typeof AdminConfiguracionRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/disponibilidad': {
@@ -330,6 +349,7 @@ declare module '@tanstack/react-router' {
 interface AdminRouteRouteChildren {
   AdminBloqueosRoute: typeof AdminBloqueosRoute
   AdminCalendarioRoute: typeof AdminCalendarioRoute
+  AdminConfiguracionRoute: typeof AdminConfiguracionRoute
   AdminDisponibilidadRoute: typeof AdminDisponibilidadRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminPagosRoute: typeof AdminPagosRoute
@@ -341,6 +361,7 @@ interface AdminRouteRouteChildren {
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminBloqueosRoute: AdminBloqueosRoute,
   AdminCalendarioRoute: AdminCalendarioRoute,
+  AdminConfiguracionRoute: AdminConfiguracionRoute,
   AdminDisponibilidadRoute: AdminDisponibilidadRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminPagosRoute: AdminPagosRoute,
