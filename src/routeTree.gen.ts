@@ -14,6 +14,7 @@ import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as ReservarRouteImport } from './routes/reservar'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminCalendarioRouteImport } from './routes/admin/calendario'
+import { Route as AdminDisponibilidadRouteImport } from './routes/admin/disponibilidad'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminTurnosRouteImport } from './routes/admin/turnos'
 import { Route as TurnoTokenRouteImport } from './routes/turno.$token'
@@ -44,6 +45,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 const AdminCalendarioRoute = AdminCalendarioRouteImport.update({
   id: '/calendario',
   path: '/calendario',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminDisponibilidadRoute = AdminDisponibilidadRouteImport.update({
+  id: '/disponibilidad',
+  path: '/disponibilidad',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
@@ -84,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteRouteWithChildren
   '/reservar': typeof ReservarRoute
   '/admin/calendario': typeof AdminCalendarioRoute
+  '/admin/disponibilidad': typeof AdminDisponibilidadRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/turnos': typeof AdminTurnosRoute
   '/turno/$token': typeof TurnoTokenRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/reservar': typeof ReservarRoute
   '/admin/calendario': typeof AdminCalendarioRoute
+  '/admin/disponibilidad': typeof AdminDisponibilidadRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/turnos': typeof AdminTurnosRoute
   '/turno/$token': typeof TurnoTokenRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteRouteWithChildren
   '/reservar': typeof ReservarRoute
   '/admin/calendario': typeof AdminCalendarioRoute
+  '/admin/disponibilidad': typeof AdminDisponibilidadRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/turnos': typeof AdminTurnosRoute
   '/turno/$token': typeof TurnoTokenRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/reservar'
     | '/admin/calendario'
+    | '/admin/disponibilidad'
     | '/admin/login'
     | '/admin/turnos'
     | '/turno/$token'
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/'
     | '/reservar'
     | '/admin/calendario'
+    | '/admin/disponibilidad'
     | '/admin/login'
     | '/admin/turnos'
     | '/turno/$token'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/reservar'
     | '/admin/calendario'
+    | '/admin/disponibilidad'
     | '/admin/login'
     | '/admin/turnos'
     | '/turno/$token'
@@ -206,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCalendarioRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/disponibilidad': {
+      id: '/admin/disponibilidad'
+      path: '/disponibilidad'
+      fullPath: '/admin/disponibilidad'
+      preLoaderRoute: typeof AdminDisponibilidadRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/login': {
       id: '/admin/login'
       path: '/login'
@@ -253,6 +272,7 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteRouteChildren {
   AdminCalendarioRoute: typeof AdminCalendarioRoute
+  AdminDisponibilidadRoute: typeof AdminDisponibilidadRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminTurnosRoute: typeof AdminTurnosRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -260,6 +280,7 @@ interface AdminRouteRouteChildren {
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminCalendarioRoute: AdminCalendarioRoute,
+  AdminDisponibilidadRoute: AdminDisponibilidadRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminTurnosRoute: AdminTurnosRoute,
   AdminIndexRoute: AdminIndexRoute,
