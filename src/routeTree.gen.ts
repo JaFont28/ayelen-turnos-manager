@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as ReservarRouteImport } from './routes/reservar'
 import { Route as TurnoTokenRouteImport } from './routes/turno.$token'
 import { Route as ApiPublicCronExpirePendingRouteImport } from './routes/api/public/cron/expire-pending'
@@ -19,6 +20,11 @@ import { Route as ApiPublicWebhooksMercadopagoRouteImport } from './routes/api/p
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReservarRoute = ReservarRouteImport.update({
@@ -51,6 +57,7 @@ const ApiPublicWebhooksMercadopagoRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRoute
   '/reservar': typeof ReservarRoute
   '/turno/$token': typeof TurnoTokenRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRoute
   '/reservar': typeof ReservarRoute
   '/turno/$token': typeof TurnoTokenRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
@@ -68,6 +76,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRoute
   '/reservar': typeof ReservarRoute
   '/turno/$token': typeof TurnoTokenRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
@@ -78,6 +87,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/reservar'
     | '/turno/$token'
     | '/api/public/cron/expire-pending'
@@ -86,6 +96,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/reservar'
     | '/turno/$token'
     | '/api/public/cron/expire-pending'
@@ -94,6 +105,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/reservar'
     | '/turno/$token'
     | '/api/public/cron/expire-pending'
@@ -103,6 +115,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRouteRoute: typeof AdminRouteRoute
   ReservarRoute: typeof ReservarRoute
   TurnoTokenRoute: typeof TurnoTokenRoute
   ApiPublicCronExpirePendingRoute: typeof ApiPublicCronExpirePendingRoute
@@ -117,6 +130,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reservar': {
@@ -159,6 +179,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRouteRoute: AdminRouteRoute,
   ReservarRoute: ReservarRoute,
   TurnoTokenRoute: TurnoTokenRoute,
   ApiPublicCronExpirePendingRoute: ApiPublicCronExpirePendingRoute,
