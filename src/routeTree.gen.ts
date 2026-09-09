@@ -18,6 +18,7 @@ import { Route as AdminCalendarioRouteImport } from './routes/admin/calendario'
 import { Route as AdminDisponibilidadRouteImport } from './routes/admin/disponibilidad'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminPagosRouteImport } from './routes/admin/pagos'
+import { Route as AdminPreciosRouteImport } from './routes/admin/precios'
 import { Route as AdminTurnosRouteImport } from './routes/admin/turnos'
 import { Route as TurnoTokenRouteImport } from './routes/turno.$token'
 import { Route as ApiPublicCronExpirePendingRouteImport } from './routes/api/public/cron/expire-pending'
@@ -69,6 +70,11 @@ const AdminPagosRoute = AdminPagosRouteImport.update({
   path: '/pagos',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminPreciosRoute = AdminPreciosRouteImport.update({
+  id: '/precios',
+  path: '/precios',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminTurnosRoute = AdminTurnosRouteImport.update({
   id: '/turnos',
   path: '/turnos',
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/admin/disponibilidad': typeof AdminDisponibilidadRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/pagos': typeof AdminPagosRoute
+  '/admin/precios': typeof AdminPreciosRoute
   '/admin/turnos': typeof AdminTurnosRoute
   '/turno/$token': typeof TurnoTokenRoute
   '/admin/': typeof AdminIndexRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByTo {
   '/admin/disponibilidad': typeof AdminDisponibilidadRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/pagos': typeof AdminPagosRoute
+  '/admin/precios': typeof AdminPreciosRoute
   '/admin/turnos': typeof AdminTurnosRoute
   '/turno/$token': typeof TurnoTokenRoute
   '/admin': typeof AdminIndexRoute
@@ -138,6 +146,7 @@ export interface FileRoutesById {
   '/admin/disponibilidad': typeof AdminDisponibilidadRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/pagos': typeof AdminPagosRoute
+  '/admin/precios': typeof AdminPreciosRoute
   '/admin/turnos': typeof AdminTurnosRoute
   '/turno/$token': typeof TurnoTokenRoute
   '/admin/': typeof AdminIndexRoute
@@ -156,6 +165,7 @@ export interface FileRouteTypes {
     | '/admin/disponibilidad'
     | '/admin/login'
     | '/admin/pagos'
+    | '/admin/precios'
     | '/admin/turnos'
     | '/turno/$token'
     | '/admin/'
@@ -171,6 +181,7 @@ export interface FileRouteTypes {
     | '/admin/disponibilidad'
     | '/admin/login'
     | '/admin/pagos'
+    | '/admin/precios'
     | '/admin/turnos'
     | '/turno/$token'
     | '/admin'
@@ -187,6 +198,7 @@ export interface FileRouteTypes {
     | '/admin/disponibilidad'
     | '/admin/login'
     | '/admin/pagos'
+    | '/admin/precios'
     | '/admin/turnos'
     | '/turno/$token'
     | '/admin/'
@@ -270,6 +282,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPagosRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/precios': {
+      id: '/admin/precios'
+      path: '/precios'
+      fullPath: '/admin/precios'
+      preLoaderRoute: typeof AdminPreciosRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/turnos': {
       id: '/admin/turnos'
       path: '/turnos'
@@ -314,6 +333,7 @@ interface AdminRouteRouteChildren {
   AdminDisponibilidadRoute: typeof AdminDisponibilidadRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminPagosRoute: typeof AdminPagosRoute
+  AdminPreciosRoute: typeof AdminPreciosRoute
   AdminTurnosRoute: typeof AdminTurnosRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -324,6 +344,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminDisponibilidadRoute: AdminDisponibilidadRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminPagosRoute: AdminPagosRoute,
+  AdminPreciosRoute: AdminPreciosRoute,
   AdminTurnosRoute: AdminTurnosRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
