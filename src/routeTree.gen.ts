@@ -10,33 +10,223 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
+import { Route as ReservarRouteImport } from './routes/reservar'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminBloqueosRouteImport } from './routes/admin/bloqueos'
+import { Route as AdminCalendarioRouteImport } from './routes/admin/calendario'
+import { Route as AdminConfiguracionRouteImport } from './routes/admin/configuracion'
+import { Route as AdminDisponibilidadRouteImport } from './routes/admin/disponibilidad'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminPagosRouteImport } from './routes/admin/pagos'
+import { Route as AdminPreciosRouteImport } from './routes/admin/precios'
+import { Route as AdminTurnosRouteImport } from './routes/admin/turnos'
+import { Route as TurnoTokenRouteImport } from './routes/turno.$token'
+import { Route as ApiPublicCronExpirePendingRouteImport } from './routes/api/public/cron/expire-pending'
+import { Route as ApiPublicCronRemindersRouteImport } from './routes/api/public/cron/reminders'
+import { Route as ApiPublicWebhooksMercadopagoRouteImport } from './routes/api/public/webhooks/mercadopago'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReservarRoute = ReservarRouteImport.update({
+  id: '/reservar',
+  path: '/reservar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminBloqueosRoute = AdminBloqueosRouteImport.update({
+  id: '/bloqueos',
+  path: '/bloqueos',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminCalendarioRoute = AdminCalendarioRouteImport.update({
+  id: '/calendario',
+  path: '/calendario',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminConfiguracionRoute = AdminConfiguracionRouteImport.update({
+  id: '/configuracion',
+  path: '/configuracion',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminDisponibilidadRoute = AdminDisponibilidadRouteImport.update({
+  id: '/disponibilidad',
+  path: '/disponibilidad',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPagosRoute = AdminPagosRouteImport.update({
+  id: '/pagos',
+  path: '/pagos',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPreciosRoute = AdminPreciosRouteImport.update({
+  id: '/precios',
+  path: '/precios',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminTurnosRoute = AdminTurnosRouteImport.update({
+  id: '/turnos',
+  path: '/turnos',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const TurnoTokenRoute = TurnoTokenRouteImport.update({
+  id: '/turno/$token',
+  path: '/turno/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicCronExpirePendingRoute =
+  ApiPublicCronExpirePendingRouteImport.update({
+    id: '/api/public/cron/expire-pending',
+    path: '/api/public/cron/expire-pending',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicCronRemindersRoute = ApiPublicCronRemindersRouteImport.update({
+  id: '/api/public/cron/reminders',
+  path: '/api/public/cron/reminders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicWebhooksMercadopagoRoute =
+  ApiPublicWebhooksMercadopagoRouteImport.update({
+    id: '/api/public/webhooks/mercadopago',
+    path: '/api/public/webhooks/mercadopago',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
+  '/reservar': typeof ReservarRoute
+  '/admin/bloqueos': typeof AdminBloqueosRoute
+  '/admin/calendario': typeof AdminCalendarioRoute
+  '/admin/configuracion': typeof AdminConfiguracionRoute
+  '/admin/disponibilidad': typeof AdminDisponibilidadRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/pagos': typeof AdminPagosRoute
+  '/admin/precios': typeof AdminPreciosRoute
+  '/admin/turnos': typeof AdminTurnosRoute
+  '/turno/$token': typeof TurnoTokenRoute
+  '/admin/': typeof AdminIndexRoute
+  '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
+  '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
+  '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/reservar': typeof ReservarRoute
+  '/admin/bloqueos': typeof AdminBloqueosRoute
+  '/admin/calendario': typeof AdminCalendarioRoute
+  '/admin/configuracion': typeof AdminConfiguracionRoute
+  '/admin/disponibilidad': typeof AdminDisponibilidadRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/pagos': typeof AdminPagosRoute
+  '/admin/precios': typeof AdminPreciosRoute
+  '/admin/turnos': typeof AdminTurnosRoute
+  '/turno/$token': typeof TurnoTokenRoute
+  '/admin': typeof AdminIndexRoute
+  '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
+  '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
+  '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
+  '/reservar': typeof ReservarRoute
+  '/admin/bloqueos': typeof AdminBloqueosRoute
+  '/admin/calendario': typeof AdminCalendarioRoute
+  '/admin/configuracion': typeof AdminConfiguracionRoute
+  '/admin/disponibilidad': typeof AdminDisponibilidadRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/pagos': typeof AdminPagosRoute
+  '/admin/precios': typeof AdminPreciosRoute
+  '/admin/turnos': typeof AdminTurnosRoute
+  '/turno/$token': typeof TurnoTokenRoute
+  '/admin/': typeof AdminIndexRoute
+  '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
+  '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
+  '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/reservar'
+    | '/admin/bloqueos'
+    | '/admin/calendario'
+    | '/admin/configuracion'
+    | '/admin/disponibilidad'
+    | '/admin/login'
+    | '/admin/pagos'
+    | '/admin/precios'
+    | '/admin/turnos'
+    | '/turno/$token'
+    | '/admin/'
+    | '/api/public/cron/expire-pending'
+    | '/api/public/cron/reminders'
+    | '/api/public/webhooks/mercadopago'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/reservar'
+    | '/admin/bloqueos'
+    | '/admin/calendario'
+    | '/admin/configuracion'
+    | '/admin/disponibilidad'
+    | '/admin/login'
+    | '/admin/pagos'
+    | '/admin/precios'
+    | '/admin/turnos'
+    | '/turno/$token'
+    | '/admin'
+    | '/api/public/cron/expire-pending'
+    | '/api/public/cron/reminders'
+    | '/api/public/webhooks/mercadopago'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/reservar'
+    | '/admin/bloqueos'
+    | '/admin/calendario'
+    | '/admin/configuracion'
+    | '/admin/disponibilidad'
+    | '/admin/login'
+    | '/admin/pagos'
+    | '/admin/precios'
+    | '/admin/turnos'
+    | '/turno/$token'
+    | '/admin/'
+    | '/api/public/cron/expire-pending'
+    | '/api/public/cron/reminders'
+    | '/api/public/webhooks/mercadopago'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  ReservarRoute: typeof ReservarRoute
+  TurnoTokenRoute: typeof TurnoTokenRoute
+  ApiPublicCronExpirePendingRoute: typeof ApiPublicCronExpirePendingRoute
+  ApiPublicCronRemindersRoute: typeof ApiPublicCronRemindersRoute
+  ApiPublicWebhooksMercadopagoRoute: typeof ApiPublicWebhooksMercadopagoRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +238,150 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reservar': {
+      id: '/reservar'
+      path: '/reservar'
+      fullPath: '/reservar'
+      preLoaderRoute: typeof ReservarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/bloqueos': {
+      id: '/admin/bloqueos'
+      path: '/bloqueos'
+      fullPath: '/admin/bloqueos'
+      preLoaderRoute: typeof AdminBloqueosRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/calendario': {
+      id: '/admin/calendario'
+      path: '/calendario'
+      fullPath: '/admin/calendario'
+      preLoaderRoute: typeof AdminCalendarioRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/configuracion': {
+      id: '/admin/configuracion'
+      path: '/configuracion'
+      fullPath: '/admin/configuracion'
+      preLoaderRoute: typeof AdminConfiguracionRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/disponibilidad': {
+      id: '/admin/disponibilidad'
+      path: '/disponibilidad'
+      fullPath: '/admin/disponibilidad'
+      preLoaderRoute: typeof AdminDisponibilidadRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/pagos': {
+      id: '/admin/pagos'
+      path: '/pagos'
+      fullPath: '/admin/pagos'
+      preLoaderRoute: typeof AdminPagosRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/precios': {
+      id: '/admin/precios'
+      path: '/precios'
+      fullPath: '/admin/precios'
+      preLoaderRoute: typeof AdminPreciosRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/turnos': {
+      id: '/admin/turnos'
+      path: '/turnos'
+      fullPath: '/admin/turnos'
+      preLoaderRoute: typeof AdminTurnosRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/turno/$token': {
+      id: '/turno/$token'
+      path: '/turno/$token'
+      fullPath: '/turno/$token'
+      preLoaderRoute: typeof TurnoTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/cron/expire-pending': {
+      id: '/api/public/cron/expire-pending'
+      path: '/api/public/cron/expire-pending'
+      fullPath: '/api/public/cron/expire-pending'
+      preLoaderRoute: typeof ApiPublicCronExpirePendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/cron/reminders': {
+      id: '/api/public/cron/reminders'
+      path: '/api/public/cron/reminders'
+      fullPath: '/api/public/cron/reminders'
+      preLoaderRoute: typeof ApiPublicCronRemindersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/webhooks/mercadopago': {
+      id: '/api/public/webhooks/mercadopago'
+      path: '/api/public/webhooks/mercadopago'
+      fullPath: '/api/public/webhooks/mercadopago'
+      preLoaderRoute: typeof ApiPublicWebhooksMercadopagoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AdminRouteRouteChildren {
+  AdminBloqueosRoute: typeof AdminBloqueosRoute
+  AdminCalendarioRoute: typeof AdminCalendarioRoute
+  AdminConfiguracionRoute: typeof AdminConfiguracionRoute
+  AdminDisponibilidadRoute: typeof AdminDisponibilidadRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminPagosRoute: typeof AdminPagosRoute
+  AdminPreciosRoute: typeof AdminPreciosRoute
+  AdminTurnosRoute: typeof AdminTurnosRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminBloqueosRoute: AdminBloqueosRoute,
+  AdminCalendarioRoute: AdminCalendarioRoute,
+  AdminConfiguracionRoute: AdminConfiguracionRoute,
+  AdminDisponibilidadRoute: AdminDisponibilidadRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminPagosRoute: AdminPagosRoute,
+  AdminPreciosRoute: AdminPreciosRoute,
+  AdminTurnosRoute: AdminTurnosRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
+  ReservarRoute: ReservarRoute,
+  TurnoTokenRoute: TurnoTokenRoute,
+  ApiPublicCronExpirePendingRoute: ApiPublicCronExpirePendingRoute,
+  ApiPublicCronRemindersRoute: ApiPublicCronRemindersRoute,
+  ApiPublicWebhooksMercadopagoRoute: ApiPublicWebhooksMercadopagoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
