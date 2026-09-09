@@ -66,7 +66,7 @@ function AdminHome() {
   );
 }
 
-function Card({ label, value }: { label: string; value?: number }) {
+function Card({ label, value }: { label: string; value: number | undefined }) {
   return (
     <div className="rounded border p-3">
       <div className="text-2xl font-semibold">{value ?? "—"}</div>

@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as ReservarRouteImport } from './routes/reservar'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as TurnoTokenRouteImport } from './routes/turno.$token'
 import { Route as ApiPublicCronExpirePendingRouteImport } from './routes/api/public/cron/expire-pending'
@@ -32,6 +33,11 @@ const ReservarRoute = ReservarRouteImport.update({
   id: '/reservar',
   path: '/reservar',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/login',
@@ -67,16 +73,17 @@ export interface FileRoutesByFullPath {
   '/reservar': typeof ReservarRoute
   '/admin/login': typeof AdminLoginRoute
   '/turno/$token': typeof TurnoTokenRoute
+  '/admin/': typeof AdminIndexRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteRouteWithChildren
   '/reservar': typeof ReservarRoute
   '/admin/login': typeof AdminLoginRoute
   '/turno/$token': typeof TurnoTokenRoute
+  '/admin': typeof AdminIndexRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
@@ -88,6 +95,7 @@ export interface FileRoutesById {
   '/reservar': typeof ReservarRoute
   '/admin/login': typeof AdminLoginRoute
   '/turno/$token': typeof TurnoTokenRoute
+  '/admin/': typeof AdminIndexRoute
   '/api/public/cron/expire-pending': typeof ApiPublicCronExpirePendingRoute
   '/api/public/cron/reminders': typeof ApiPublicCronRemindersRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
@@ -100,16 +108,17 @@ export interface FileRouteTypes {
     | '/reservar'
     | '/admin/login'
     | '/turno/$token'
+    | '/admin/'
     | '/api/public/cron/expire-pending'
     | '/api/public/cron/reminders'
     | '/api/public/webhooks/mercadopago'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/admin'
     | '/reservar'
     | '/admin/login'
     | '/turno/$token'
+    | '/admin'
     | '/api/public/cron/expire-pending'
     | '/api/public/cron/reminders'
     | '/api/public/webhooks/mercadopago'
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/reservar'
     | '/admin/login'
     | '/turno/$token'
+    | '/admin/'
     | '/api/public/cron/expire-pending'
     | '/api/public/cron/reminders'
     | '/api/public/webhooks/mercadopago'
@@ -157,6 +167,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/reservar'
       preLoaderRoute: typeof ReservarRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/admin/login': {
       id: '/admin/login'
@@ -198,10 +215,12 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteRouteChildren {
   AdminLoginRoute: typeof AdminLoginRoute
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminLoginRoute: AdminLoginRoute,
+  AdminIndexRoute: AdminIndexRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
