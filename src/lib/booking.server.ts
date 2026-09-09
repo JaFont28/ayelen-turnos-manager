@@ -72,7 +72,7 @@ export async function computeAvailability(
     supabaseAdmin
       .from("appointments")
       .select("id, date, start_time, status")
-      .in("status", ACTIVE_STATUSES as unknown as string[])
+      .in("status", [...ACTIVE_STATUSES])
       .gte("date", start)
       .lte("date", toDate),
   ]);
@@ -506,7 +506,7 @@ export async function requestRefund(
   } catch (mpError) {
     await supabaseAdmin
       .from("refunds")
-      .update({ status: "failed", error: null, reason: `${reason} | ${String(mpError)}` })
+      .update({ status: "failed", reason: `${reason} | ${String(mpError)}` })
       .eq("id", refund.id);
     return { status: "failed" };
   }
