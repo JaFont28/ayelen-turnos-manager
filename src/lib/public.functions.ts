@@ -21,9 +21,15 @@ const rangeSchema = z.object({
   token: z.string().max(200).optional(),
 });
 
+// URL estable del proyecto: Mercado Pago exige URLs públicas https para las
+// pantallas de retorno y el webhook, así que en desarrollo local usamos la
+// preview publicada en lugar de http://localhost.
+const STABLE_PREVIEW_URL = "https://project--e5d28871-a79a-4341-a493-f971dce8eb7f-dev.lovable.app";
+
 function baseUrl(): string {
-  const request = getRequest();
-  return new URL(request.url).origin;
+  const origin = new URL(getRequest().url).origin;
+  if (origin.startsWith("https://")) return origin;
+  return process.env["PUBLIC_SITE_URL"] ?? STABLE_PREVIEW_URL;
 }
 
 function fail(error: unknown): never {
