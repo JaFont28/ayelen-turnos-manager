@@ -62,7 +62,8 @@ export async function createPreference(input: PreferenceInput): Promise<{
       pending: `${input.baseUrl}/turno/${input.secureToken}`,
       failure: `${input.baseUrl}/turno/${input.secureToken}`,
     },
-    auto_return: "approved",
+    // Mercado Pago sólo acepta auto_return con URLs públicas https.
+    ...(input.baseUrl.startsWith("https://") ? { auto_return: "approved" } : {}),
   };
   const pref = await mpFetch("/checkout/preferences", {
     method: "POST",
