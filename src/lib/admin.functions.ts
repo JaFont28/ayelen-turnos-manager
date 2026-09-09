@@ -322,7 +322,8 @@ export const adminUpdateSettings = adminFn()
   .handler(async ({ data, context }) => {
     await assertAdmin(context.userId);
     const db = await admin();
-    const { error } = await db.from("site_settings").update(data).eq("id", true);
+    const patch = Object.fromEntries(Object.entries(data).filter(([, v]) => v !== undefined));
+    const { error } = await db.from("site_settings").update(patch as never).eq("id", true);
     if (error) fail(error);
     return { ok: true as const };
   });
