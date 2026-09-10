@@ -38,15 +38,12 @@ function fail(error: unknown): never {
   throw new Error(error instanceof Error ? error.message : "Error inesperado");
 }
 
-const adminFn = (method: "GET" | "POST" = "POST") =>
-  createServerFn({ method }).middleware([requireSupabaseAuth]);
-
-export const adminMe = adminFn("GET").handler(async ({ context }) => {
+export const adminMe = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
   await assertAdmin(context.userId);
   return { userId: context.userId, isAdmin: true as const };
 });
 
-export const adminSummary = adminFn("GET").handler(async ({ context }) => {
+export const adminSummary = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
   await assertAdmin(context.userId);
   const { expirePendingBookings } = await import("./booking.server");
   const { todayBA } = await import("./time");
@@ -68,7 +65,7 @@ export const adminSummary = adminFn("GET").handler(async ({ context }) => {
   };
 });
 
-export const adminListAppointments = adminFn("GET")
+export const adminListAppointments = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
     z
       .object({
@@ -101,7 +98,7 @@ export const adminListAppointments = adminFn("GET")
     return rows ?? [];
   });
 
-export const adminCreateAppointment = adminFn()
+export const adminCreateAppointment = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
     z
       .object({
@@ -128,7 +125,7 @@ export const adminCreateAppointment = adminFn()
     }
   });
 
-export const adminCancelAppointment = adminFn()
+export const adminCancelAppointment = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => z.object({ id: z.string().uuid() }).parse(input))
   .handler(async ({ data, context }) => {
     await assertAdmin(context.userId);
@@ -140,7 +137,7 @@ export const adminCancelAppointment = adminFn()
     }
   });
 
-export const adminRescheduleAppointment = adminFn()
+export const adminRescheduleAppointment = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
     z.object({ id: z.string().uuid(), date: dateStr, startTime: timeStr }).parse(input),
   )
@@ -155,7 +152,7 @@ export const adminRescheduleAppointment = adminFn()
     }
   });
 
-export const adminAvailabilityCalendar = adminFn("GET")
+export const adminAvailabilityCalendar = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => z.object({ from: dateStr, to: dateStr }).parse(input))
   .handler(async ({ data, context }) => {
     await assertAdmin(context.userId);
@@ -164,7 +161,7 @@ export const adminAvailabilityCalendar = adminFn("GET")
   });
 
 // ---------- Disponibilidad semanal ----------
-export const adminListAvailability = adminFn("GET").handler(async ({ context }) => {
+export const adminListAvailability = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
   await assertAdmin(context.userId);
   const db = await admin();
   const { data } = await db
@@ -175,7 +172,7 @@ export const adminListAvailability = adminFn("GET").handler(async ({ context }) 
   return data ?? [];
 });
 
-export const adminSetAvailability = adminFn()
+export const adminSetAvailability = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
     z
       .object({ weekday: z.number().int().min(1).max(5), startTime: timeStr, isActive: z.boolean() })
@@ -194,7 +191,7 @@ export const adminSetAvailability = adminFn()
     return { ok: true as const };
   });
 
-export const adminDeleteAvailability = adminFn()
+export const adminDeleteAvailability = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => z.object({ id: z.string().uuid() }).parse(input))
   .handler(async ({ data, context }) => {
     await assertAdmin(context.userId);
@@ -204,7 +201,7 @@ export const adminDeleteAvailability = adminFn()
   });
 
 // ---------- Bloqueos ----------
-export const adminListBlocks = adminFn("GET").handler(async ({ context }) => {
+export const adminListBlocks = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
   await assertAdmin(context.userId);
   const { todayBA } = await import("./time");
   const db = await admin();
@@ -216,7 +213,7 @@ export const adminListBlocks = adminFn("GET").handler(async ({ context }) => {
   return data ?? [];
 });
 
-export const adminCreateBlock = adminFn()
+export const adminCreateBlock = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
     z
       .object({ date: dateStr, startTime: timeStr.nullable().optional(), reason: z.string().max(200).optional() })
@@ -249,7 +246,7 @@ export const adminCreateBlock = adminFn()
     };
   });
 
-export const adminDeleteBlock = adminFn()
+export const adminDeleteBlock = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => z.object({ id: z.string().uuid() }).parse(input))
   .handler(async ({ data, context }) => {
     await assertAdmin(context.userId);
@@ -259,7 +256,7 @@ export const adminDeleteBlock = adminFn()
   });
 
 // ---------- Pagos y reembolsos ----------
-export const adminListPayments = adminFn("GET").handler(async ({ context }) => {
+export const adminListPayments = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
   await assertAdmin(context.userId);
   const db = await admin();
   const { data } = await db
@@ -272,7 +269,7 @@ export const adminListPayments = adminFn("GET").handler(async ({ context }) => {
   return data ?? [];
 });
 
-export const adminRefund = adminFn()
+export const adminRefund = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
     z.object({ paymentId: z.string().uuid(), amount: z.number().positive().optional() }).parse(input),
   )
@@ -297,13 +294,13 @@ export const adminRefund = adminFn()
   });
 
 // ---------- Precios y configuración ----------
-export const adminGetSettings = adminFn("GET").handler(async ({ context }) => {
+export const adminGetSettings = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
   await assertAdmin(context.userId);
   const { getSettings } = await import("./booking.server");
   return await getSettings();
 });
 
-export const adminUpdateSettings = adminFn()
+export const adminUpdateSettings = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
     z
       .object({
@@ -328,7 +325,7 @@ export const adminUpdateSettings = adminFn()
     return { ok: true as const };
   });
 
-export const adminListNotifications = adminFn("GET").handler(async ({ context }) => {
+export const adminListNotifications = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
   await assertAdmin(context.userId);
   const db = await admin();
   const { data } = await db
