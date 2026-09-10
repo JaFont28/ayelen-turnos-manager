@@ -15,6 +15,13 @@
       "when": 1789015608930,
       "tag": "0001_security_hardening_policies_and_functions",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789015626026,
+      "tag": "0002_is_admin_self_only",
+      "breakpoints": true
     }
   ]
 }
