@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -5,22 +6,35 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system definition.
+ * Design system — Ayelén Pajuelo Piccoli (Lic. en Psicología).
+ * Basado en el Manual de Marca: enfoque de Terapia Cognitiva Integrativa.
  *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
+ * Tipografía:
+ *   - Display/editorial (equivalente a Bell MT): Cormorant Garamond
+ *   - Texto/UI (equivalente a Century Gothic): Jost
  *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
+ * Paleta (valores oficiales del manual, convertidos a oklch):
+ *   Primaria:   #965A5A borgoña/burdeos · #D17778 rosa · #FAD1D2 rosa claro · #F7EFD9 crema
+ *   Secundaria: #C9C8AA verde salvia · #DACDBD beige/tierra
  *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ * Contraste verificado (WCAG AA):
+ *   - Burdeos + texto blanco/crema → 5.3:1 (botones y CTAs)
+ *   - Burdeos sobre crema/blanco → 4.7-4.9:1 (texto de acento, enlaces)
+ *   - Rosa (#D17778) NO se usa como color de texto: queda por debajo de AA
+ *     en cuerpos de texto. Se reserva para íconos, bordes, fondos de
+ *     badges (con texto oscuro) y detalles decorativos.
+ *
+ * Para agregar un color semántico nuevo:
+ * 1. Agregar la variable en :root (valor claro) y .dark (valor oscuro)
+ * 2. Registrarla en @theme inline como --color-<nombre>: var(--<nombre>)
  */
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Jost", "Century Gothic", "Futura", Avenir, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 3px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
@@ -46,6 +60,18 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+
+  /* Colores secundarios de marca, disponibles como utilidades (bg-sage, text-clay, etc). */
+  --color-rose: var(--rose);
+  --color-rose-light: var(--rose-light);
+  --color-sage: var(--sage);
+  --color-clay: var(--clay);
+  --color-cream: var(--cream);
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -62,74 +88,104 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 0.9rem;
+
+  --background: oklch(0.953 0.03 90.3); /* crema #F7EFD9 */
+  --foreground: oklch(0.28 0.027 30); /* marrón cálido casi negro, no negro puro */
+
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.28 0.027 30);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --popover-foreground: oklch(0.28 0.027 30);
+
+  --primary: oklch(0.535 0.079 20); /* burdeos #965A5A */
+  --primary-foreground: oklch(0.98 0.012 85);
+
+  --secondary: oklch(0.896 0.046 16.4); /* rosa claro #FAD1D2 */
+  --secondary-foreground: oklch(0.32 0.03 25);
+
+  --muted: oklch(0.97 0.015 80);
+  --muted-foreground: oklch(0.47 0.03 30);
+
+  --accent: oklch(0.669 0.113 19.8); /* rosa #D17778 — decorativo, no usar como texto */
+  --accent-foreground: oklch(0.98 0.012 85);
+
+  --success: oklch(0.5 0.11 145); /* oscurecido para AA como texto/badge (5.7:1 sobre blanco) */
+  --success-foreground: oklch(0.98 0.01 145);
+  --warning: oklch(0.75 0.14 75);
+  --warning-foreground: oklch(0.28 0.05 60);
+
+  --destructive: oklch(0.55 0.16 26);
+  --destructive-foreground: oklch(0.98 0.012 85);
+
+  --border: oklch(0.88 0.025 40);
+  --input: oklch(0.88 0.025 40);
+  --ring: oklch(0.535 0.079 20); /* burdeos: foco visible con buen contraste */
+
+  --rose: oklch(0.669 0.113 19.8); /* #D17778 */
+  --rose-light: oklch(0.896 0.046 16.4); /* #FAD1D2 */
+  --sage: oklch(0.826 0.041 105.7); /* #C9C8AA */
+  --clay: oklch(0.855 0.026 73.1); /* #DACDBD */
+  --cream: oklch(0.953 0.03 90.3); /* #F7EFD9 */
+
+  --chart-1: oklch(0.535 0.079 20);
+  --chart-2: oklch(0.669 0.113 19.8);
+  --chart-3: oklch(0.826 0.041 105.7);
+  --chart-4: oklch(0.855 0.026 73.1);
+  --chart-5: oklch(0.75 0.14 75);
+
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.28 0.027 30);
+  --sidebar-primary: oklch(0.535 0.079 20);
+  --sidebar-primary-foreground: oklch(0.98 0.012 85);
+  --sidebar-accent: oklch(0.896 0.046 16.4);
+  --sidebar-accent-foreground: oklch(0.32 0.03 25);
+  --sidebar-border: oklch(0.9 0.02 40);
+  --sidebar-ring: oklch(0.535 0.079 20);
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --background: oklch(0.24 0.03 22);
+  --foreground: oklch(0.96 0.02 80);
+  --card: oklch(0.3 0.035 22);
+  --card-foreground: oklch(0.96 0.02 80);
+  --popover: oklch(0.3 0.035 22);
+  --popover-foreground: oklch(0.96 0.02 80);
+  --primary: oklch(0.78 0.06 20);
+  --primary-foreground: oklch(0.22 0.03 22);
+  --secondary: oklch(0.38 0.04 22);
+  --secondary-foreground: oklch(0.96 0.02 80);
+  --muted: oklch(0.34 0.035 22);
+  --muted-foreground: oklch(0.78 0.03 60);
+  --accent: oklch(0.669 0.113 19.8);
+  --accent-foreground: oklch(0.98 0.012 85);
+  --success: oklch(0.6 0.11 145);
+  --success-foreground: oklch(0.98 0.01 145);
+  --warning: oklch(0.75 0.14 75);
+  --warning-foreground: oklch(0.22 0.05 60);
+  --destructive: oklch(0.65 0.17 26);
+  --destructive-foreground: oklch(0.98 0.012 85);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.78 0.06 20);
+  --rose: oklch(0.669 0.113 19.8);
+  --rose-light: oklch(0.5 0.06 20);
+  --sage: oklch(0.6 0.05 105);
+  --clay: oklch(0.55 0.03 60);
+  --cream: oklch(0.3 0.03 60);
+  --chart-1: oklch(0.78 0.06 20);
+  --chart-2: oklch(0.669 0.113 19.8);
+  --chart-3: oklch(0.6 0.05 105);
+  --chart-4: oklch(0.55 0.03 60);
+  --chart-5: oklch(0.75 0.14 75);
+  --sidebar: oklch(0.3 0.035 22);
+  --sidebar-foreground: oklch(0.96 0.02 80);
+  --sidebar-primary: oklch(0.78 0.06 20);
+  --sidebar-primary-foreground: oklch(0.22 0.03 22);
+  --sidebar-accent: oklch(0.38 0.04 22);
+  --sidebar-accent-foreground: oklch(0.96 0.02 80);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.78 0.06 20);
 }
 
 @layer base {
@@ -137,8 +193,39 @@
     border-color: var(--color-border);
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01";
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  /* Foco visible y consistente en toda la app (accesibilidad). */
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .font-display {
+    font-family: var(--font-display);
   }
 }
